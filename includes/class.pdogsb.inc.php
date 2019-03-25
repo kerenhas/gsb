@@ -38,7 +38,7 @@
 
 class PdoGsb
 {
-    private static $serveur = 'mysql:host=sio2019.alwaysdata.net';
+    private static $serveur = 'mysql:host=sio2019';
     private static $bdd = 'dbname=gsb_frais';
     private static $user = 'sio2019_jdr';
     private static $mdp = 'Pilote03@';
