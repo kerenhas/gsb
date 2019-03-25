@@ -1,3 +1,4 @@
+-- coucou
 -- Script de restauration de l'application "GSB Frais"
 
 -- Administration de la base de données
