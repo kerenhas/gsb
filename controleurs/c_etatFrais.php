@@ -36,14 +36,9 @@ case 'voirEtatFrais':
     $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
     $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
     $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
-	echo $idVisiteur;
-	echo $leMois;
     $numAnnee = substr($leMois, 0, 4);
     $numMois = substr($leMois, 4, 2);
     $libEtat = $lesInfosFicheFrais['libEtat'];
-	echo'avant';
-	echo $libEtat;
-	echo 'apres';
     $montantValide = $lesInfosFicheFrais['montantValide'];
     $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
     $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
