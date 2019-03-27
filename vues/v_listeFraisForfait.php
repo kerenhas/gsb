@@ -35,7 +35,8 @@ if($_SESSION['statut']== 'visiteur' ){ // si l'utilisateur est un visiteur
    <div class="container">
         
                <div class="mx-auto"  >  
-             
+             </br>
+			 </br>
                   <h2 style="color:red">Valider la fiche de frais </h2>
      <h3>Eléments forfaitisés</h3>
      <div class="col-md-5" style="float:none;">
