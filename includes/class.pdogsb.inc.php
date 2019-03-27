@@ -38,10 +38,10 @@
 
 class PdoGsb
 {
-    private static $serveur = 'mysql:host=sio2019333';
-    private static $bdd = 'dbname=gsb_frais';
-    private static $user = 'sio2019_jdr';
-    private static $mdp = 'Pilote03@';
+    private static $serveur = 'mysql:host=appligsbfpkeren.mysql.db';
+    private static $bdd = 'dbname=appligsbfpkeren';
+    private static $user = 'appligsbfpkeren';
+    private static $mdp = 'Pilote03'; 
     private static $monPdo;
     private static $monPdoGsb = null;//correspond a la connection a la base de donnée
 
@@ -51,10 +51,9 @@ class PdoGsb
      */
     private function __construct()
     {
-		
         PdoGsb::$monPdo = new PDO(//nouvelle connection
             PdoGsb::$serveur . ';' . PdoGsb::$bdd,
-            PdoGsb::$user
+            PdoGsb::$user,
             PdoGsb::$mdp
         );
         PdoGsb::$monPdo->query('SET CHARACTER SET utf8');//pdo permet la connection mais aussi l'interaction avec la bdd et la il s'agit d'une requete ( PdoGsb::$monPdo->query)qui veut que tt la bdd soit codé en certains caracteres
@@ -643,16 +642,16 @@ class PdoGsb
      * @return un tableau avec des champs de jointure entre une fiche de frais
      *         et la ligne d'état
      */
-    public function getLesInfosFicheFrais($idVisiteur, $mois)
+       public function getLesInfosFicheFrais($idVisiteur, $mois)
     {
         $requetePrepare = PdoGSB::$monPdo->prepare(
-            'SELECT ficheFrais.idEtat as idEtat, '
-            . 'ficheFrais.dateModif as dateModif,'
-            . 'ficheFrais.nbJustificatifs as nbJustificatifs, '
-            . 'ficheFrais.montantValide as montantValide, '
+            'SELECT fichefrais.idetat as idEtat, '
+            . 'fichefrais.datemodif as dateModif,'
+            . 'fichefrais.nbjustificatifs as nbJustificatifs, '
+            . 'fichefrais.montantvalide as montantValide, '
             . 'etat.libelle as libEtat '
             . 'FROM fichefrais '
-            . 'INNER JOIN Etat ON ficheFrais.idEtat = Etat.id '
+            . 'INNER JOIN etat ON fichefrais.idetat = etat.id '
             . 'WHERE fichefrais.idvisiteur = :unIdVisiteur '
             . 'AND fichefrais.mois = :unMois'
         );
@@ -662,6 +661,7 @@ class PdoGsb
         $laLigne = $requetePrepare->fetch();
         return $laLigne;
     }
+
 
     /**
      * Modifie l'état et la date de modification d'une fiche de frais.
