@@ -82,7 +82,21 @@ break;
                 	exit('<b>Catched exception at line '. $e->getLine() .' :</b> '. $e->getMessage());
               }
                echo '<script type="text/javascript">window.alert("La fiche a bien été validé,vous pouvez choisir une autre fiche ");</script>';
-     
+          $quantite=0;
+       $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois); // recuperation ds montant forfaitise
+          foreach ($lesFraisForfait as $unFraisForfait) {
+                $quantite = $quantite+$unFraisForfait['quantite']; // on les met dans $quantite pour les ajoutes par la suite a montant valider
+          } 
+           $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois); // de meme avec les frais  hors forfait qui ne commence pas par refuser
+          foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+               $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+               $ref = substr($libelle, 0, 7);
+               if($ref!=="REFUSER"){
+                $quantite = $quantite+$unFraisHorsForfait['montant'];
+				echo'reff';
+               }
+          }
+     $pdo->montantValider($idVisiteur,$mois,$quantite);
 break;
 }
 $etat="CL";
