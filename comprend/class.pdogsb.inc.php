@@ -100,8 +100,6 @@ class PdoGsb
     
     // donne la liste des visiteurs 
     
-
-    
     public function getVisiteur(){
         
         $requetePrepare = PdoGsb::$monPdo->prepare(
@@ -124,7 +122,13 @@ class PdoGsb
       
         }
                 
-    
+     /**
+rerourne les informations du comptable      *
+     * @param String $login Login du visiteu
+     * @param String $mdp   Mot de passe du visiteur
+     *
+     * @return l'id, le nom et le prénom sous la forme d'un tableau associatif
+     */
     public function getInfosComptable($login, $mdp)
     {
         $requetePrepare = PdoGsb::$monPdo->prepare( 
@@ -247,7 +251,6 @@ class PdoGsb
             $requetePrepare->execute();
         }
     }
-	
 	   function SupprimerFrais($idVisiteur, $mois,$libelle,$idFrais){
    
            foreach ($idFrais as $unIdFraisH) {
