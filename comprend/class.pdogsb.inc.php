@@ -251,13 +251,9 @@ class PdoGsb
 	   function SupprimerFrais($idVisiteur, $mois,$libelle,$idFrais){
    
            foreach ($idFrais as $unIdFraisH) {
-			   echo $mois;
-			   	echo 'bien la dans la fonction ';
+			   
          $qteL = $libelle[$unIdFraisH];
-		 echo $qteL;
-      //   $qteL = $qteL.'refuser' ;
-	    $qteL = $qteL.'Refuser' ;
-		echo $qteL;
+	 $qteL = 'REFUSER'.$qteL ;
 		
           $requetePrepare = PdoGSB::$monPdo->prepare(         
          'UPDATE lignefraishorsforfait '
@@ -687,6 +683,27 @@ class PdoGsb
         $requetePrepare->bindParam(':unetat', $etat, PDO::PARAM_STR);
         $requetePrepare->bindParam(':unidvisiteur', $idVisiteur, PDO::PARAM_STR);
         $requetePrepare->bindParam(':unmois', $mois, PDO::PARAM_STR);
+        $requetePrepare->execute();
+    }
+	/**
+     * Modifie le montant valider en fonction de la fiche et des frais (forfait et hors forfait valider ) 
+     *
+     * @param String $idVisiteur ID du visiteur
+     * @param String $mois       Mois sous la forme aaaamm
+     * @param String $etat       Nouvel état de la fiche de frais
+     *
+     * @return null
+   */ 
+	public function montantValider($idVisiteur,$mois,$quantite){
+        $requetePrepare = PdoGsb::$monPdo->prepare(
+                'UPDATE fichefrais '
+                 .'SET montantvalide = :montant '
+                 . 'WHERE fichefrais.idvisiteur = :unIdVisiteur '
+                  . 'AND fichefrais.mois = :unMois'
+                );
+         $requetePrepare->bindParam(':montant', $quantite, PDO::PARAM_INT);
+         $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
         $requetePrepare->execute();
     }
 }
